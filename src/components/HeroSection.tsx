@@ -1,10 +1,12 @@
 import { Github, Linkedin, Mail, Download } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo.jpg";
+import { BackgroundPaths } from "@/components/ui/background-paths";
 
 const HeroSection = () => {
   return (
-    <section id="home" className="min-h-screen flex items-center pt-16">
-      <div className="container mx-auto px-4">
+    <section id="home" className="min-h-screen flex items-center pt-16 relative">
+      <BackgroundPaths />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
           {/* Photo */}
           <div className="flex-shrink-0 animate-fade-up" style={{ animationDelay: "0.2s" }}>
