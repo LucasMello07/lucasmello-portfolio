@@ -1,8 +1,34 @@
 import { Github, Linkedin, Mail, Download } from "lucide-react";
+import { useState, useEffect } from "react";
 import profilePhoto from "@/assets/profile-photo.jpg";
 import { BackgroundPaths } from "@/components/ui/background-paths";
 
+const useTypingEffect = (text: string, speed = 80) => {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    let i = 0;
+    setDisplayed("");
+    setDone(false);
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        setDisplayed(text.slice(0, i + 1));
+        i++;
+      } else {
+        setDone(true);
+        clearInterval(interval);
+      }
+    }, speed);
+    return () => clearInterval(interval);
+  }, [text, speed]);
+
+  return { displayed, done };
+};
+
 const HeroSection = () => {
+  const { displayed, done } = useTypingEffect("Desenvolvedor Full Stack", 80);
+
   return (
     <section id="home" className="min-h-screen flex items-center pt-16 relative">
       <BackgroundPaths />
@@ -29,7 +55,15 @@ const HeroSection = () => {
               <span className="text-gradient">Lucas Melo</span>
             </h1>
             <h2 className="text-xl md:text-2xl text-muted-foreground font-medium mb-6 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              Sou <span className="text-primary font-mono">Desenvolvedor Full Tech</span>
+              Sou{" "}
+              <span className="text-primary font-mono">
+                {displayed}
+                <span
+                  className={`inline-block w-0.5 h-5 md:h-6 bg-primary ml-0.5 align-middle ${
+                    done ? "animate-[blink_1s_step-end_infinite]" : ""
+                  }`}
+                />
+              </span>
             </h2>
             <p className="text-muted-foreground max-w-lg mb-8 leading-relaxed animate-fade-up" style={{ animationDelay: "0.4s" }}>
               Desenvolvo soluções modernas e escaláveis utilizando tecnologias atuais do mercado.
@@ -38,7 +72,7 @@ const HeroSection = () => {
             {/* Social icons */}
             <div className="flex items-center gap-4 justify-center md:justify-start mb-8 animate-fade-up" style={{ animationDelay: "0.5s" }}>
               <a
-                href="https://github.com/seuusuario"
+                href="https://github.com/LucasMello07"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-lg bg-secondary text-muted-foreground hover:text-primary hover:bg-muted transition-all duration-200"
@@ -47,7 +81,7 @@ const HeroSection = () => {
                 <Github className="w-5 h-5" />
               </a>
               <a
-                href="https://linkedin.com/in/seuusuario"
+                href="https://www.linkedin.com/in/lucasmello07/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-lg bg-secondary text-muted-foreground hover:text-primary hover:bg-muted transition-all duration-200"
@@ -56,7 +90,7 @@ const HeroSection = () => {
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
-                href="mailto:seuemail@gmail.com"
+                href="mailto:lucasmellofreitas2014@gmail.com"
                 className="p-3 rounded-lg bg-secondary text-muted-foreground hover:text-primary hover:bg-muted transition-all duration-200"
                 aria-label="Email"
               >
