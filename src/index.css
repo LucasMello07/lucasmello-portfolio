@@ -15,8 +15,8 @@
     --popover: 220 18% 10%;
     --popover-foreground: 210 20% 92%;
 
-    --primary: 174 72% 56%;
-    --primary-foreground: 220 20% 6%;
+    --primary: 261 62% 64%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 220 16% 16%;
     --secondary-foreground: 210 20% 92%;
@@ -24,26 +24,26 @@
     --muted: 220 14% 14%;
     --muted-foreground: 215 14% 55%;
 
-    --accent: 174 72% 56%;
-    --accent-foreground: 220 20% 6%;
+    --accent: 261 62% 64%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 220 14% 18%;
     --input: 220 14% 18%;
-    --ring: 174 72% 56%;
+    --ring: 261 62% 64%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 220 18% 8%;
     --sidebar-foreground: 210 20% 92%;
-    --sidebar-primary: 174 72% 56%;
-    --sidebar-primary-foreground: 220 20% 6%;
+    --sidebar-primary: 261 62% 64%;
+    --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 220 16% 16%;
     --sidebar-accent-foreground: 210 20% 92%;
     --sidebar-border: 220 14% 18%;
-    --sidebar-ring: 174 72% 56%;
+    --sidebar-ring: 261 62% 64%;
   }
 }
 
@@ -67,11 +67,11 @@
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-[hsl(190,80%,65%)];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-[hsl(290,70%,75%)];
   }
 
   .glow {
-    box-shadow: 0 0 20px hsl(174 72% 56% / 0.15);
+    box-shadow: 0 0 20px hsl(261 62% 64% / 0.15);
   }
 
   .section-fade-in {
@@ -87,5 +87,10 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 }
