@@ -30,6 +30,38 @@ export function NavBar({ items, className, onItemClick }: NavBarProps) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Scroll spy: track which section is in view
+  useEffect(() => {
+    const sectionIds = items.map((item) => item.url.replace("#", ""));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find the entry that is most visible
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) {
+          // Pick the one with highest intersection ratio
+          const best = visible.reduce((a, b) =>
+            a.intersectionRatio > b.intersectionRatio ? a : b
+          );
+          const match = items.find(
+            (item) => item.url.replace("#", "") === best.target.id
+          );
+          if (match) {
+            setActiveTab(match.name);
+          }
+        }
+      },
+      { threshold: 0.3, rootMargin: "-10% 0px -10% 0px" }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [items]);
+
   return (
     <div
       className={cn(
