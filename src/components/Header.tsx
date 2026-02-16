@@ -6,7 +6,6 @@ const navItems = [
   { name: "Sobre Mim", url: "#sobre", icon: User },
   { name: "Habilidades", url: "#habilidades", icon: Code },
   { name: "Projetos", url: "#projetos", icon: Briefcase },
-  { name: "Contato", url: "#contato", icon: Mail },
 ];
 
 const Header = () => {

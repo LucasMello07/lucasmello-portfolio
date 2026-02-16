@@ -14,9 +14,9 @@ const AboutSection = () => {
           <div className="w-16 h-1 bg-primary rounded-full mb-8" />
 
           <p className="text-muted-foreground leading-relaxed text-lg mb-8">
-            Sou apaixonado por tecnologia e desenvolvimento de software. Tenho experiência com desenvolvimento web,
-            aplicações modernas e integração de sistemas. Busco sempre criar soluções eficientes, escaláveis e bem
-            estruturadas.
+          Sou formado em Ciência da Computação e desenvolvedor full stack, com experiência na criação de aplicações web modernas, landing pages com React e TypeScript e soluções back-end com Node.js e Next.js. 
+          Tenho experiência em integração de sistemas, APIs, automações e implementação de agentes de IA para atendimento 
+          em sites e e-commerces, sempre com foco em performance, escalabilidade, experiência do usuário e geração de valor para o negócio.
           </p>
 
           <a

@@ -27,7 +27,7 @@ const useTypingEffect = (text: string, speed = 80) => {
 };
 
 const HeroSection = () => {
-  const { displayed, done } = useTypingEffect("Desenvolvedor Full Stack", 80);
+  const { displayed, done } = useTypingEffect("Desenvolvedor Full Stack Junior", 80);
 
   return (
     <section id="home" className="min-h-screen flex items-center pt-16 relative">
@@ -51,11 +51,10 @@ const HeroSection = () => {
               Olá, seja bem-vindo 👋
             </p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              Olá, meu nome é{" "}
-              <span className="text-gradient">Lucas Melo</span>
+              Meu nome é{" "}
+              <span className="text-gradient">Lucas Mello</span>
             </h1>
             <h2 className="text-xl md:text-2xl text-muted-foreground font-medium mb-6 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              Sou{" "}
               <span className="text-primary font-mono">
                 {displayed}
                 <span
