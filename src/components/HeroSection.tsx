@@ -58,14 +58,13 @@ const HeroSection = () => {
               <span className="text-primary font-mono">
                 {displayed}
                 <span
-                  className={`inline-block w-0.5 h-5 md:h-6 bg-primary ml-0.5 align-middle ${
-                    done ? "animate-[blink_1s_step-end_infinite]" : ""
-                  }`}
+                  className={`inline-block w-0.5 h-5 md:h-6 bg-primary ml-0.5 align-middle ${done ? "animate-[blink_1s_step-end_infinite]" : ""
+                    }`}
                 />
               </span>
             </h2>
             <p className="text-muted-foreground max-w-lg mb-8 leading-relaxed animate-fade-up" style={{ animationDelay: "0.4s" }}>
-              Desenvolvo soluções modernas e escaláveis utilizando tecnologias atuais do mercado.
+              Desenvolvo aplicações ponta a ponta, garantindo integração eficiente entre as camadas da aplicação.
             </p>
 
             {/* Social icons */}

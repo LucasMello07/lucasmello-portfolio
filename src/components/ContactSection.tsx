@@ -40,7 +40,7 @@ const ContactSection = () => {
           }`}
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">
-            <span className="text-gradient">Entre em Contato!</span>
+            <span className="text-gradient">Entre em Contato</span>
           </h2>
           <div className="w-16 h-1 bg-primary rounded-full mb-6 mx-auto" />
           <p className="text-muted-foreground text-center text-lg mb-12 max-w-xl mx-auto">
