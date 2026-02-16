@@ -1,5 +1,7 @@
-import { ExternalLink } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { ProjectCard } from "@/components/ui/project-card";
+import projectGestao from "@/assets/project-gestao.jpg";
+import projectIotAgro from "@/assets/project-iot-agro.jpg";
 
 const projects = [
   {
@@ -7,12 +9,14 @@ const projects = [
     description: "Plataforma web para controle de clientes e contratos.",
     techs: ["React", "Node.js", "MySQL"],
     link: "#",
+    imgSrc: projectGestao,
   },
   {
     title: "Plataforma IoT Agro",
     description: "Sistema de monitoramento agrícola com sensores e dashboard web.",
     techs: ["ESP32", "API REST", "React"],
     link: "#",
+    imgSrc: projectIotAgro,
   },
 ];
 
@@ -30,34 +34,15 @@ const ProjectsSection = () => {
 
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {projects.map((project, i) => (
-              <div
+              <ProjectCard
                 key={project.title}
-                className="group p-6 rounded-xl bg-card border border-border hover:border-primary/40 transition-all duration-300 hover:glow"
+                imgSrc={project.imgSrc}
+                title={project.title}
+                description={project.description}
+                link={project.link}
+                techs={project.techs}
                 style={{ animationDelay: `${i * 0.1}s` }}
-              >
-                <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-200">
-                  {project.title}
-                </h3>
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.techs.map((tech) => (
-                    <span
-                      key={tech}
-                      className="text-xs font-mono px-3 py-1 rounded-full bg-secondary text-primary border border-border"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <a
-                  href={project.link}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline transition-colors"
-                >
-                  Ver Projeto <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
+              />
             ))}
           </div>
         </div>
