@@ -109,7 +109,7 @@
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-[hsl(261,62%,50%)];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[hsl(261,62%,50%)] to-primary;
   }
 
   .glow {
