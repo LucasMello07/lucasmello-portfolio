@@ -12,7 +12,7 @@ const contactLinks = [
     icon: Instagram,
     label: "Instagram",
     value: "@lucasmello04",
-    href: "https://instagram.com/lucasmello04",
+    href: "https://www.instagram.com/lucasmello04",
   },
   {
     icon: Linkedin,
