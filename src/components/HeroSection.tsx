@@ -1,7 +1,8 @@
-import { Github, Linkedin, Mail, Download } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
 import profilePhoto from "@/assets/profile-photo.jpg";
 import { BackgroundPaths } from "@/components/ui/background-paths";
+import DownloadButton from "@/components/ui/button-download";
 
 const useTypingEffect = (text: string, speed = 80) => {
   const [displayed, setDisplayed] = useState("");
@@ -28,6 +29,49 @@ const useTypingEffect = (text: string, speed = 80) => {
 
 const HeroSection = () => {
   const { displayed, done } = useTypingEffect("Desenvolvedor Full Stack Junior", 80);
+  const [downloadStatus, setDownloadStatus] = useState<"idle" | "downloading" | "downloaded" | "complete">("idle");
+  const [progress, setProgress] = useState(0);
+
+  const simulateDownload = () => {
+    setDownloadStatus("downloading");
+    setProgress(0);
+
+    // Trigger actual download
+    const link = document.createElement('a');
+    link.href = "/curriculo.pdf";
+    link.download = "curriculo.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    const interval = setInterval(() => {
+      setProgress((prevProgress) => {
+        if (prevProgress >= 100) {
+          clearInterval(interval);
+          setDownloadStatus("downloaded");
+          return 100;
+        }
+        return prevProgress + 5;
+      });
+    }, 200); // Update every 200ms to complete in 4 seconds
+
+    // Show 'Downloaded' state for 1.5 seconds
+    setTimeout(() => {
+      setDownloadStatus("complete");
+    }, 4000 + 1500);
+
+    // Reset to idle state after download completes and 'Downloaded' state is shown
+    setTimeout(() => {
+      setDownloadStatus("idle");
+      setProgress(0);
+    }, 4000 + 1500 + 100);
+  };
+
+  const handleDownloadClick = () => {
+    if (downloadStatus === "idle") {
+      simulateDownload();
+    }
+  };
 
   return (
     <section id="home" className="min-h-screen flex items-center pt-16 relative">
@@ -88,7 +132,7 @@ const HeroSection = () => {
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
-                href="mailto:lucasmellofreitas2014@gmail.com"
+                href="mailto:lucasmellofreitas2014@gmail.com?subject=Contato%20do%20Portfolio"
                 className="p-3 rounded-lg bg-secondary text-muted-foreground hover:text-primary hover:bg-muted transition-all duration-200"
                 aria-label="Email"
               >
@@ -98,14 +142,13 @@ const HeroSection = () => {
 
             {/* CTA */}
             <div className="animate-fade-up" style={{ animationDelay: "0.6s" }}>
-              <a
-                href="/curriculo.pdf"
-                download
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:opacity-90 transition-all duration-200 glow"
-              >
-                <Download className="w-4 h-4" />
-                Baixar Currículo
-              </a>
+              <DownloadButton 
+                downloadStatus={downloadStatus}
+                progress={progress}
+                onClick={handleDownloadClick}
+                label="Baixar Currículo"
+                className="hover:shadow-xl transition-shadow duration-300"
+              />
             </div>
           </div>
         </div>

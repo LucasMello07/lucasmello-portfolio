@@ -26,6 +26,12 @@ const contactLinks = [
     value: "LucasMello07",
     href: "https://github.com/LucasMello07",
   },
+  {
+    icon: Mail,
+    label: "Email",
+    value: "lucasmellofreitas2014@gmail.com",
+    href: "mailto:lucasmellofreitas2014@gmail.com?subject=Contato%20do%20Portfolio",
+  },
 ];
 
 const ContactSection = () => {
@@ -42,21 +48,22 @@ const ContactSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">
             <span className="text-gradient">Entre em Contato</span>
           </h2>
-          <div className="w-16 h-1 bg-primary rounded-full mb-6 mx-auto" />
+          <div className="w-16 h-1 bg-primary rounded-full mb-5 mx-auto" />
           <p className="text-muted-foreground text-center text-lg mb-12 max-w-xl mx-auto">
             Sempre em busca de novos desafios tecnológicos e oportunidades para
             elevar o nível do desenvolvimento.
           </p>
 
-          <div className="grid sm:grid-cols-2 gap-4 mb-10">
+          <div className="grid sm:grid-cols-2 gap-4">
             {contactLinks.map((item) => {
               const Icon = item.icon;
+              const isEmail = item.href.startsWith("mailto:");
               return (
                 <a
                   key={item.label}
                   href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={isEmail ? undefined : "_blank"}
+                  rel={isEmail ? undefined : "noopener noreferrer"}
                   className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary/40 transition-all duration-300 hover:glow group"
                 >
                   <div className="p-3 rounded-lg bg-secondary text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-200">
@@ -69,16 +76,6 @@ const ContactSection = () => {
                 </a>
               );
             })}
-          </div>
-
-          <div className="text-center">
-            <a
-              href="mailto:lucasmellofreitas2014@gmail.com"
-              className="inline-flex items-center gap-2 text-primary hover:underline font-mono text-sm"
-            >
-              <Mail className="w-4 h-4" />
-              lucasmellofreitas2014@gmail.com
-            </a>
           </div>
         </div>
       </div>

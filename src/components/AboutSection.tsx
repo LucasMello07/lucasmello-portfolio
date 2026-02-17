@@ -1,8 +1,52 @@
-import { Download } from "lucide-react";
+import { useState } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import DownloadButton from "@/components/ui/button-download";
 
 const AboutSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const [downloadStatus, setDownloadStatus] = useState<"idle" | "downloading" | "downloaded" | "complete">("idle");
+  const [progress, setProgress] = useState(0);
+
+  const simulateDownload = () => {
+    setDownloadStatus("downloading");
+    setProgress(0);
+
+    // Trigger actual download
+    const link = document.createElement('a');
+    link.href = "/curriculo.pdf";
+    link.download = "curriculo.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    const interval = setInterval(() => {
+      setProgress((prevProgress) => {
+        if (prevProgress >= 100) {
+          clearInterval(interval);
+          setDownloadStatus("downloaded");
+          return 100;
+        }
+        return prevProgress + 5;
+      });
+    }, 200); // Update every 200ms to complete in 4 seconds
+
+    // Show 'Downloaded' state for 1.5 seconds
+    setTimeout(() => {
+      setDownloadStatus("complete");
+    }, 4000 + 1500);
+
+    // Reset to idle state after download completes and 'Downloaded' state is shown
+    setTimeout(() => {
+      setDownloadStatus("idle");
+      setProgress(0);
+    }, 4000 + 1500 + 100);
+  };
+
+  const handleDownloadClick = () => {
+    if (downloadStatus === "idle") {
+      simulateDownload();
+    }
+  };
 
   return (
     <section id="sobre" className="py-24">
@@ -14,19 +58,20 @@ const AboutSection = () => {
           <div className="w-16 h-1 bg-primary rounded-full mb-8" />
 
           <p className="text-muted-foreground leading-relaxed text-lg mb-8">
-          Sou formado em Ciência da Computação e desenvolvedor full stack, com experiência na criação de aplicações web modernas, landing pages com React e TypeScript e soluções back-end com Node.js e Next.js. 
-          Tenho experiência em integração de sistemas, APIs, automações e implementação de agentes de IA para atendimento 
-          em sites e e-commerces, sempre com foco em performance, escalabilidade, experiência do usuário e geração de valor para o negócio.
+            Sou formado em Ciência da Computação e atuo como Desenvolvedor Full Stack,
+            desenvolvendo aplicações web modernas com React, TypeScript, Node.js e Next.js, além de criar APIs, integrar sistemas (CRMs e ERPs),
+            automatizar processos e implementar agentes de IA para atendimento digital.
+            Trabalho com foco em arquitetura organizada, performance, escalabilidade e experiência do usuário,
+            sempre buscando gerar valor estratégico para o negócio por meio da tecnologia.
           </p>
 
-          <a
-            href="/curriculo.pdf"
-            download
-            className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary rounded-lg font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-          >
-            <Download className="w-4 h-4" />
-            Baixar Currículo
-          </a>
+          <DownloadButton 
+            downloadStatus={downloadStatus}
+            progress={progress}
+            onClick={handleDownloadClick}
+            label="Baixar Currículo"
+            className="hover:shadow-xl transition-shadow duration-300"
+          />
         </div>
       </div>
     </section>
