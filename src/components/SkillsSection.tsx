@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, startTransition } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { IconCloud } from "@/components/ui/icon-cloud";
 import { Particles } from "@/components/ui/particles";
@@ -44,26 +44,20 @@ const SkillsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const justClickedIcon = useRef(false);
 
   const skill = selectedSkill ? skillsData[selectedSkill] : null;
 
   const handleIconClick = useCallback((slug: string) => {
-    // Use setTimeout to yield to the browser's event loop first
+    justClickedIcon.current = true;
+    // Small delay so it doesn't block the cloud's internal events
     setTimeout(() => {
-      startTransition(() => {
-        setSelectedSkill((prev) => {
-          if (prev === slug) {
-            setVisible(false);
-            return null;
-          }
-          return slug;
-        });
-      });
-    }, 0);
+      setSelectedSkill((prev) => (prev === slug ? null : slug));
+      justClickedIcon.current = false;
+    }, 10);
   }, []);
 
-  // Animate in after state settles
+  // Animate in after selectedSkill changes
   useEffect(() => {
     if (selectedSkill) {
       requestAnimationFrame(() => setVisible(true));
@@ -72,12 +66,21 @@ const SkillsSection = () => {
     }
   }, [selectedSkill]);
 
-  // Close on click outside
+  // Close popup when clicking outside the cloud area
   useEffect(() => {
     if (!selectedSkill) return;
     const handler = (e: MouseEvent) => {
-      const card = document.getElementById("skill-popup");
-      if (card && !card.contains(e.target as Node)) {
+      // Skip if this mousedown came from an icon click
+      if (justClickedIcon.current) return;
+
+      const popup = document.getElementById("skill-popup");
+      const cloud = document.getElementById("skill-cloud-wrapper");
+
+      // Only close if click is outside BOTH the popup and the cloud
+      if (
+        popup && !popup.contains(e.target as Node) &&
+        cloud && !cloud.contains(e.target as Node)
+      ) {
         setVisible(false);
         setTimeout(() => setSelectedSkill(null), 200);
       }
@@ -109,21 +112,22 @@ const SkillsSection = () => {
           </p>
 
           {/* Cloud + overlay card */}
-          <div ref={containerRef} className="relative flex w-full max-w-[40rem] mx-auto items-center justify-center overflow-visible my-8">
+          <div id="skill-cloud-wrapper" className="relative flex w-full max-w-[40rem] mx-auto items-center justify-center overflow-visible my-8">
             <IconCloud
               iconSlugs={slugs}
               onIconClick={handleIconClick}
             />
 
-            {/* Skill popup card — always mounted when selected, animated via CSS */}
+            {/* Skill popup card */}
             {skill && (
               <div
                 id="skill-popup"
+                style={{ pointerEvents: "auto" }}
                 className={cn(
-                  "absolute bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-auto transition-all duration-200 ease-out will-change-[transform,opacity]",
+                  "absolute bottom-4 left-1/2 -translate-x-1/2 z-20 transition-all duration-200 ease-out will-change-[transform,opacity]",
                   visible
                     ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-3"
+                    : "opacity-0 translate-y-3 pointer-events-none"
                 )}
               >
                 <div className="flex items-center gap-4 rounded-xl border bg-card/90 backdrop-blur-md px-5 py-3 shadow-xl shadow-primary/10">
@@ -147,7 +151,8 @@ const SkillsSection = () => {
                     </div>
                   </div>
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setVisible(false);
                       setTimeout(() => setSelectedSkill(null), 200);
                     }}
