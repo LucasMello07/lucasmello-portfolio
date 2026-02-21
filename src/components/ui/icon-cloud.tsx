@@ -95,6 +95,9 @@ export function IconCloud({ iconSlugs, onIconClick }: DynamicCloudProps) {
                     rel: undefined,
                     onClick: (e: any) => {
                         e.preventDefault()
+                    },
+                    onMouseUp: (e: any) => {
+                        // Only fire if it wasn't a drag (small movement threshold)
                         onIconClick?.(icon.slug)
                     },
                 },
