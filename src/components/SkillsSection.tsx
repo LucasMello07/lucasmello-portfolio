@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback, startTransition } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { IconCloud } from "@/components/ui/icon-cloud";
 import { Particles } from "@/components/ui/particles";
@@ -43,9 +43,34 @@ const skillsData: Record<string, { name: string; level: number }> = {
 const SkillsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+  const [visible, setVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const skill = selectedSkill ? skillsData[selectedSkill] : null;
+
+  const handleIconClick = useCallback((slug: string) => {
+    // Use setTimeout to yield to the browser's event loop first
+    setTimeout(() => {
+      startTransition(() => {
+        setSelectedSkill((prev) => {
+          if (prev === slug) {
+            setVisible(false);
+            return null;
+          }
+          return slug;
+        });
+      });
+    }, 0);
+  }, []);
+
+  // Animate in after state settles
+  useEffect(() => {
+    if (selectedSkill) {
+      requestAnimationFrame(() => setVisible(true));
+    } else {
+      setVisible(false);
+    }
+  }, [selectedSkill]);
 
   // Close on click outside
   useEffect(() => {
@@ -53,10 +78,11 @@ const SkillsSection = () => {
     const handler = (e: MouseEvent) => {
       const card = document.getElementById("skill-popup");
       if (card && !card.contains(e.target as Node)) {
-        setSelectedSkill(null);
+        setVisible(false);
+        setTimeout(() => setSelectedSkill(null), 200);
       }
     };
-    window.addEventListener("mousedown", handler);
+    window.addEventListener("mousedown", handler, { passive: true });
     return () => window.removeEventListener("mousedown", handler);
   }, [selectedSkill]);
 
@@ -86,16 +112,19 @@ const SkillsSection = () => {
           <div ref={containerRef} className="relative flex w-full max-w-[40rem] mx-auto items-center justify-center overflow-visible my-8">
             <IconCloud
               iconSlugs={slugs}
-              onIconClick={(slug) =>
-                setSelectedSkill((prev) => (prev === slug ? null : slug))
-              }
+              onIconClick={handleIconClick}
             />
 
-            {/* Skill popup card */}
+            {/* Skill popup card — always mounted when selected, animated via CSS */}
             {skill && (
               <div
                 id="skill-popup"
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 animate-in fade-in slide-in-from-bottom-4 duration-300"
+                className={cn(
+                  "absolute bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-auto transition-all duration-200 ease-out will-change-[transform,opacity]",
+                  visible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-3"
+                )}
               >
                 <div className="flex items-center gap-4 rounded-xl border bg-card/90 backdrop-blur-md px-5 py-3 shadow-xl shadow-primary/10">
                   <div className="flex flex-col gap-1">
@@ -110,7 +139,7 @@ const SkillsSection = () => {
                         <div
                           key={i}
                           className={cn(
-                            "h-4 w-2.5 rounded-sm transition-colors duration-300",
+                            "h-4 w-2.5 rounded-sm",
                             i < skill.level ? "bg-primary" : "bg-muted"
                           )}
                         />
@@ -118,7 +147,10 @@ const SkillsSection = () => {
                     </div>
                   </div>
                   <button
-                    onClick={() => setSelectedSkill(null)}
+                    onClick={() => {
+                      setVisible(false);
+                      setTimeout(() => setSelectedSkill(null), 200);
+                    }}
                     className="text-muted-foreground hover:text-foreground transition-colors ml-1"
                   >
                     <X size={14} />
