@@ -62,11 +62,12 @@ export const renderCustomIcon = (icon: SimpleIcon, theme: string) => {
 
 export type DynamicCloudProps = {
     iconSlugs: string[]
+    onIconClick?: (slug: string) => void
 }
 
 type IconData = Awaited<ReturnType<typeof fetchSimpleIcons>>
 
-export function IconCloud({ iconSlugs }: DynamicCloudProps) {
+export function IconCloud({ iconSlugs, onIconClick }: DynamicCloudProps) {
     const [data, setData] = useState<IconData | null>(null)
     const { theme } = useTheme()
 
@@ -77,10 +78,29 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
     const renderedIcons = useMemo(() => {
         if (!data) return null
 
-        return Object.values(data.simpleIcons).map((icon) =>
-            renderCustomIcon(icon, theme || "light"),
-        )
-    }, [data, theme])
+        return Object.values(data.simpleIcons).map((icon) => {
+            const bgHex = (theme || "light") === "light" ? "#f3f2ef" : "#080510"
+            const fallbackHex = (theme || "light") === "light" ? "#6e6e73" : "#ffffff"
+            const minContrastRatio = (theme || "light") === "dark" ? 3 : 1.2
+
+            return renderSimpleIcon({
+                icon,
+                bgHex,
+                fallbackHex,
+                minContrastRatio,
+                size: 42,
+                aProps: {
+                    href: undefined,
+                    target: undefined,
+                    rel: undefined,
+                    onClick: (e: any) => {
+                        e.preventDefault()
+                        onIconClick?.(icon.slug)
+                    },
+                },
+            })
+        })
+    }, [data, theme, onIconClick])
 
     return (
         // @ts-ignore
