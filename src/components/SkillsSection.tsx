@@ -74,25 +74,25 @@ const SkillsSection = () => {
 
           {/* Skill popup */}
           {selectedSkill && (
-            <div className="max-w-sm mx-auto mt-2 animate-in fade-in slide-in-from-top-4 duration-300">
-              <div className="rounded-2xl border border-border/50 bg-card/60 backdrop-blur-xl p-5 shadow-lg">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-lg font-semibold text-foreground">
+            <div className="max-w-[90vw] sm:max-w-sm mx-auto mt-2 animate-in fade-in slide-in-from-top-4 duration-300">
+              <div className="rounded-2xl border border-border/50 bg-card/60 backdrop-blur-xl p-4 sm:p-5 shadow-lg">
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground">
                     {slugToName[selectedSkill] ?? selectedSkill}
                   </h3>
                   <button
                     onClick={() => setSelectedSkill(null)}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-muted-foreground hover:text-foreground transition-colors p-1"
                   >
                     <X className="h-4 w-4" />
                   </button>
                 </div>
-                <p className="text-xs text-muted-foreground mb-3">Nível de conhecimento</p>
-                <div className="flex gap-1.5">
+                <p className="text-xs text-muted-foreground mb-2 sm:mb-3">Nível de conhecimento</p>
+                <div className="flex gap-1 sm:gap-1.5">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <div
                       key={i}
-                      className="h-2 flex-1 rounded-full bg-primary"
+                      className="h-2.5 sm:h-2 flex-1 rounded-full bg-primary"
                     />
                   ))}
                 </div>

@@ -4,13 +4,13 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { ProjectCard } from "@/components/ui/project-card";
 import projectContrack from "@/assets/contrack_editada.png";
 import projectAgro from "@/assets/agromello_editada.png";
+import projectConecta from "@/assets/conecta.png";
 
 const projects = [
   {
     title: "Contrack - Gestão de Contratos e Serviços",
     description: "Solução web centralizada para automação de contratos publicitários e integração entre agências, rádio e clientes. Garante fluxo digital seguro e auditável.",
     techs: ["PHP", "MySQL", "JavaScript", "Bootstrap"],
-    // Adicionamos os links específicos aqui
     linkedinLink: "https://www.linkedin.com/in/lucasmello07/details/projects/",
     githubLink: "https://github.com/ifsp-sbv-projetos-bcc/pidc-pde-2025",
     imgSrc: projectContrack,
@@ -22,6 +22,14 @@ const projects = [
     linkedinLink: "https://www.linkedin.com/in/lucasmello07/details/projects/",
     githubLink: "https://github.com/LucasMello07",
     imgSrc: projectAgro,
+  },
+  {
+    title: "Conecta+ – Plataforma Inteligente de Conexão",
+    description: "Solução web centralizada para conectar profissionais autônomos à população, automatizando agendamentos, avaliações e gestão de serviços. Integra ranking de reputação e sincronização com Google Agenda.",
+    techs: ["React", "TypeScript", "Node.js"],
+    linkedinLink: "https://www.linkedin.com/in/lucasmello07/details/projects/",
+    githubLink: "https://github.com/LucasMello07/conecta-lucas",
+    imgSrc: projectConecta,
   },
 ];
 
