@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import profilePhoto from "@/assets/profile-photo.jpg";
 import { BackgroundPaths } from "@/components/ui/background-paths";
@@ -132,11 +132,13 @@ const HeroSection = () => {
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
-                href="mailto:lucasmellofreitas2014@gmail.com?subject=Contato%20do%20Portfolio"
+                href="https://wa.me/5515991022077"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-3 rounded-lg bg-secondary text-muted-foreground hover:text-primary hover:bg-muted transition-all duration-200"
-                aria-label="Email"
+                aria-label="WhatsApp"
               >
-                <Mail className="w-5 h-5" />
+                <MessageCircle className="w-5 h-5" />
               </a>
             </div>
 
