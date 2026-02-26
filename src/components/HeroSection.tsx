@@ -80,7 +80,7 @@ const HeroSection = () => {
         <div className="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
           {/* Photo */}
           <div className="flex-shrink-0 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            <div className="w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-border glow">
+            <div className="w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-border glow transition-transform duration-300 hover:scale-105">
               <img
                 src={profilePhoto}
                 alt="Lucas Melo"
