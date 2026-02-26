@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { useTheme } from "next-themes"
 import {
     Cloud,
@@ -25,7 +25,7 @@ export const cloudProps: Omit<ICloud, "children"> = {
         depth: 1,
         wheelZoom: false,
         imageScale: 2,
-        activeCursor: "default",
+        activeCursor: "pointer",
         tooltip: "native",
         initial: [0.1, -0.1],
         clickToFront: 500,
@@ -36,13 +36,9 @@ export const cloudProps: Omit<ICloud, "children"> = {
     },
 }
 
-export const renderCustomIcon = (icon: SimpleIcon, theme: string) => {
+export const renderCustomIcon = (icon: SimpleIcon, theme: string, onIconClick?: (slug: string) => void) => {
     const bgHex = theme === "light" ? "#f3f2ef" : "#080510"
     const fallbackHex = theme === "light" ? "#6e6e73" : "#ffffff"
-
-    // AQUI O AJUSTE: Mudamos de 2 para 3
-    // Isso diz: "Se o contraste não for EXCELENTE (3), use a cor branca".
-    // Isso resolve o GitHub sumindo no fundo escuro.
     const minContrastRatio = theme === "dark" ? 3 : 1.2
 
     return renderSimpleIcon({
@@ -55,18 +51,22 @@ export const renderCustomIcon = (icon: SimpleIcon, theme: string) => {
             href: undefined,
             target: undefined,
             rel: undefined,
-            onClick: (e: any) => e.preventDefault(),
+            onClick: (e: any) => {
+                e.preventDefault()
+                onIconClick?.(icon.slug)
+            },
         },
     })
 }
 
 export type DynamicCloudProps = {
     iconSlugs: string[]
+    onIconClick?: (slug: string) => void
 }
 
 type IconData = Awaited<ReturnType<typeof fetchSimpleIcons>>
 
-export function IconCloud({ iconSlugs }: DynamicCloudProps) {
+export const IconCloud = React.memo(function IconCloud({ iconSlugs, onIconClick }: DynamicCloudProps) {
     const [data, setData] = useState<IconData | null>(null)
     const { theme } = useTheme()
 
@@ -78,9 +78,9 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
         if (!data) return null
 
         return Object.values(data.simpleIcons).map((icon) =>
-            renderCustomIcon(icon, theme || "light"),
+            renderCustomIcon(icon, theme || "light", onIconClick),
         )
-    }, [data, theme])
+    }, [data, theme, onIconClick])
 
     return (
         // @ts-ignore
@@ -88,4 +88,4 @@ export function IconCloud({ iconSlugs }: DynamicCloudProps) {
             <>{renderedIcons}</>
         </Cloud>
     )
-}
+})
