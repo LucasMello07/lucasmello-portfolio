@@ -53,7 +53,7 @@ const ProjectsSection = () => {
             Projetos desenvolvidos com foco em performance, escalabilidade e geração de valor através da tecnologia.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {projects.map((project, i) => (
               <ProjectCard
                 key={project.title}
