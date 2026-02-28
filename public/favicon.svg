@@ -1,0 +1,77 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#000000"/>
+  
+  <!-- Circuit traces (dark grey) -->
+  <g stroke="#1A1A1A" stroke-width="1.5" fill="none" opacity="0.8">
+    <!-- Horizontal traces -->
+    <line x1="60" y1="120" x2="140" y2="120"/>
+    <line x1="360" y1="120" x2="440" y2="120"/>
+    <line x1="60" y1="220" x2="140" y2="220"/>
+    <line x1="360" y1="220" x2="440" y2="220"/>
+    <line x1="60" y1="320" x2="140" y2="320"/>
+    <line x1="360" y1="320" x2="440" y2="320"/>
+    
+    <!-- Vertical traces -->
+    <line x1="110" y1="70" x2="110" y2="170"/>
+    <line x1="210" y1="70" x2="210" y2="170"/>
+    <line x1="310" y1="70" x2="310" y2="170"/>
+    <line x1="110" y1="270" x2="110" y2="370"/>
+    <line x1="210" y1="270" x2="210" y2="370"/>
+    <line x1="310" y1="270" x2="310" y2="370"/>
+    
+    <!-- Diagonal traces -->
+    <line x1="140" y1="120" x2="190" y2="170"/>
+    <line x1="190" y1="170" x2="240" y2="220"/>
+  </g>
+  
+  <!-- Circuit nodes (dark grey circles) -->
+  <g fill="#1A1A1A" opacity="0.8">
+    <circle cx="110" cy="120" r="3"/>
+    <circle cx="140" cy="120" r="3"/>
+    <circle cx="190" cy="120" r="3"/>
+    <circle cx="240" cy="120" r="3"/>
+    <circle cx="110" cy="220" r="3"/>
+    <circle cx="140" cy="220" r="3"/>
+    <circle cx="240" cy="220" r="3"/>
+    <circle cx="290" cy="220" r="3"/>
+    <circle cx="110" cy="320" r="3"/>
+    <circle cx="190" cy="320" r="3"/>
+    <circle cx="290" cy="320" r="3"/>
+  </g>
+  
+  <!-- Letter L (purple - main shape) - AUMENTADO -->
+  <g>
+    <!-- Main L shape with gradient effect - maior -->
+    <path d="M 140 60 L 140 440 L 380 440 L 380 400 L 180 400 L 180 60 Z" fill="#A855F7"/>
+    
+    <!-- Inner shadow for 3D effect -->
+    <path d="M 150 70 L 150 390 L 170 390 L 170 70 Z" fill="#9333EA" opacity="0.7"/>
+    
+    <!-- Highlight -->
+    <path d="M 140 60 L 180 60 L 180 70 L 150 70 Z" fill="#C084FC" opacity="0.5"/>
+    
+    <!-- Bottom accent with darker shade -->
+    <path d="M 140 420 L 380 420 L 380 440 L 140 440 Z" fill="#7C3AED"/>
+  </g>
+  
+  <!-- Purple circuit traces inside L -->
+  <g stroke="#A855F7" stroke-width="2.5" fill="none" opacity="0.6">
+    <line x1="180" y1="150" x2="240" y2="210"/>
+    <line x1="240" y1="210" x2="300" y2="270"/>
+    <line x1="200" y1="170" x2="260" y2="230"/>
+    <line x1="220" y1="190" x2="280" y2="250"/>
+  </g>
+  
+  <!-- Purple nodes inside L -->
+  <g fill="#A855F7">
+    <circle cx="180" cy="150" r="3"/>
+    <circle cx="240" cy="210" r="3"/>
+    <circle cx="300" cy="270" r="3"/>
+    <circle cx="200" cy="170" r="2.5"/>
+    <circle cx="260" cy="230" r="2.5"/>
+  </g>
+  
+  <!-- Code snippet </> in bottom right of L - maior -->
+  <text x="320" y="380" font-family="'Courier New', monospace" font-size="28" fill="#A855F7" font-weight="bold">&lt;/&gt;</text>
+</svg>
